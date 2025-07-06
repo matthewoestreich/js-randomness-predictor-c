@@ -5,10 +5,10 @@ project(js-randomness-predictor-c C)
 enable_language(CXX)
 
 # Needed if Z3 static lib has C++ symbols
-set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Set C standard
-set(CMAKE_C_STANDARD 23)
+set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -33,19 +33,19 @@ if(CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 elseif(CMAKE_SYSTEM_NAME STREQUAL "Linux")
   set(EXTRA_LIBS stdc++)
   set(Z3_PLATFORM "linux-x64")
-#elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-#  set(EXTRA_LIBS "") # MSVC handles this
-#  set(Z3_PLATFORM "win32-x64") 
+elseif(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  set(EXTRA_LIBS "") # MSVC handles this
+  set(Z3_PLATFORM "win32-x64") 
 else()
   message(FATAL_ERROR "Unsupported platform: ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_PROCESSOR}")
 endif()
 
 # Set z3 lib file name
-#if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-#  set(Z3_LIB_FILE_NAME "libz3.lib")
-#else()
+if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  set(Z3_LIB_FILE_NAME "libz3.lib")
+else()
   set(Z3_LIB_FILE_NAME "libz3.a")
-#endif()
+endif()
 
 # Get all .c sources
 file(GLOB_RECURSE C_SOURCES "${CMAKE_SOURCE_DIR}/src/*.c")
